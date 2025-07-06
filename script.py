@@ -9,13 +9,14 @@ import os
 from winotify import Notification, audio
 import threading
 
-def setup_logging():
+def setup_logging(isEnabled):
     # Configure logging to save terminal output to a file
-    logging.basicConfig(
-        filename='script_output.log',
-        level=logging.INFO,
-        format='%(asctime)s - %(message)s'
-    )
+    if isEnabled:
+        logging.basicConfig(
+            filename='script_output.log',
+            level=logging.INFO,
+            format='%(asctime)s - %(message)s'
+        )
 
 def flash_taskbar(hwnd):
     # Use FlashWindowEx for reliable flashing
@@ -89,7 +90,7 @@ def notify_completion(command_desc, duration, success=True):
         print("No window to flash.")
 
 def monitor_command(command_list):
-    setup_logging()
+    setup_logging(False) # disable/enable logging
     command_desc = ' '.join(command_list)
     start_time = time.time()
 
